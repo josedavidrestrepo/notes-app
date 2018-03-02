@@ -1,5 +1,8 @@
 package notesapp.service;
 
+import notesapp.exception.EntityAlreadyExistsException;
+import notesapp.exception.EntityNotFoundException;
+import notesapp.exception.ValidationException;
 import notesapp.model.User;
 import notesapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,35 +26,49 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
-        if (findByUsername(user.getUsername()) != null)
-            throw new ;
-
-        if (userService.saveUser(user) != null)
-            return new ResponseEntity<>(HttpStatus.CREATED);
+    public User createUser(User user) throws EntityAlreadyExistsException {
+        if (userRepository.findByUsername(user.getUsername()) != null)
+            throw new EntityAlreadyExistsException("The username is already taken");
 
         user.setId(null);
         return userRepository.insert(user);
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(User user) throws ValidationException, EntityNotFoundException, EntityAlreadyExistsException {
+
+        if (user.getId() == null || user.getId().isEmpty())
+            throw new ValidationException("id is required");
+
+        if (userRepository.findById(user.getId()) == null)
+            throw new EntityNotFoundException("The user was not found in the DB");
+
+        if (userRepository.findByUsername(user.getUsername()) != null)
+            throw new EntityAlreadyExistsException("The username is already taken");
+
         return userRepository.save(user);
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void deleteUser(User user) throws ValidationException, EntityNotFoundException {
+
+        if (user.getId() == null || user.getId().isEmpty())
+            throw new ValidationException("id is required");;
+
+        if (userRepository.findById(user.getId()) == null)
+            throw new EntityNotFoundException("The user was not found in the DB");
+
         userRepository.delete(user);
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
+    public User findByUsername(String username) throws EntityNotFoundException {
 
-    @Override
-    public User findById(String id)
-    {
-        return userRepository.findById(id);
+        User user = userRepository.findByUsername(username);
+
+        if (user == null)
+            throw new EntityNotFoundException("User with username " + username + " not found");
+
+        return user;
     }
 }

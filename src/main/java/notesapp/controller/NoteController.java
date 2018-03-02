@@ -2,7 +2,6 @@ package notesapp.controller;
 
 import notesapp.model.Note;
 import notesapp.service.NoteService;
-import notesapp.util.CustomErrorType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,7 @@ import java.util.List;
 @RestController
 public class NoteController {
 
-    private final NoteService noteService;
+    /*private final NoteService noteService;
 
     @Autowired
     public NoteController(NoteService noteService) {
@@ -81,6 +80,6 @@ public class NoteController {
         noteService.deleteNote(note);
 
         return new ResponseEntity<>(HttpStatus.OK);
-    }
+    }*/
 
 }

@@ -1,5 +1,8 @@
 package notesapp.service;
 
+import notesapp.exception.EntityAlreadyExistsException;
+import notesapp.exception.EntityNotFoundException;
+import notesapp.exception.ValidationException;
 import notesapp.model.User;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +13,11 @@ public interface UserService {
 
     List<User> findAllUsers();
 
-    User createUser(User user);
+    User createUser(User user) throws EntityAlreadyExistsException;
 
-    User updateUser(User user);
+    User updateUser(User user) throws ValidationException, EntityNotFoundException, EntityAlreadyExistsException;
 
-    void deleteUser(User user);
+    void deleteUser(User user) throws ValidationException, EntityNotFoundException;
 
-    User findByUsername(String username);
-
-    User findById(String id);
+    User findByUsername(String username) throws EntityNotFoundException;
 }

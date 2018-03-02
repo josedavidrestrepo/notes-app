@@ -10,9 +10,9 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class NoteServiceImpl implements NoteService {
+public class NoteServiceImpl /*implements NoteService*/ {
 
-    private final UserService userService;
+    /*private final UserService userService;
     private final NoteRepository noteRepository;
 
     @Autowired
@@ -51,5 +51,5 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public void deleteNote(Note note) {
         noteRepository.delete(note);
-    }
+    }*/
 }

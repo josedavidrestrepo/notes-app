@@ -105,6 +105,21 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
+     * Handles EntityAlreadyExistsException. Created to encapsulate errors with more detail.
+     *
+     * @param ex the EntityAlreadyExistsException
+     * @return the ApiError object
+     */
+    @ExceptionHandler(EntityAlreadyExistsException.class)
+    protected ResponseEntity<Object> handleEntityAlreadyExists(EntityAlreadyExistsException ex) {
+
+        ApiError apiError = new ApiError(CONFLICT);
+        apiError.addError(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
+    /**
      * Handles EntityNotFoundException. Created to encapsulate errors with more detail than javax.persistence.EntityNotFoundException.
      *
      * @param ex the EntityNotFoundException
@@ -114,6 +129,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
 
         ApiError apiError = new ApiError(NOT_FOUND);
+        apiError.addError(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    protected ResponseEntity<Object> handleValidationException(ValidationException ex) {
+
+        ApiError apiError = new ApiError(BAD_REQUEST);
         apiError.addError(ex.getMessage());
 
         return buildResponseEntity(apiError);
