@@ -16,7 +16,7 @@ public class User {
     @NotEmpty(message = "username is required")
     private String username;
 
-    private List<Note> noteList;
+    private List<Note> notes;
 
     public User(){
         super();
@@ -43,18 +43,18 @@ public class User {
         this.id = id;
     }
 
-    public List<Note> getNoteList() {
-        return noteList;
+    public List<Note> getNotes() {
+        return notes;
     }
 
-    public void setNoteList(List<Note> noteList) {
-        this.noteList = noteList;
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 
     public boolean addNote(Note note) {
-        if (noteList == null)
-            noteList = new ArrayList<>();
+        if (notes == null)
+            notes = new ArrayList<>();
 
-        return noteList.add(note);
+        return notes.add(note);
     }
 }

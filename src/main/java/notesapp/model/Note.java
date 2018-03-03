@@ -1,20 +1,30 @@
 package notesapp.model;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Id;
+
+import java.time.LocalDateTime;
 
 public class Note {
 
-    private String id;
+    @Id
+    private int id;
+
+    @NotEmpty(message = "Note text is required")
     private String text;
-    private Date date;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    private LocalDateTime date;
 
     public Note() {
         super();
     }
 
-    public Note(User user, String text, Date date) {
+    public Note(int id, String text) {
+        this.id = id;
         this.text = text;
-        this.date = date;
+        this.date = LocalDateTime.now();
     }
 
     public String getText() {
@@ -25,19 +35,19 @@ public class Note {
         this.text = text;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 }
