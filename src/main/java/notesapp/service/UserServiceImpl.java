@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(User user) throws ValidationException, EntityNotFoundException {
         if (user.getId() == null || user.getId().isEmpty())
-            throw new ValidationException("id is required");;
+            throw new ValidationException("id is required");
         if (userRepository.findById(user.getId()) == null)
             throw new EntityNotFoundException("The user was not found in the DB");
         userRepository.delete(user);
