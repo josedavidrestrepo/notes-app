@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -28,17 +29,17 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> createUser(@RequestBody @Valid User user) throws Exception {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody User user) throws Exception{
+    public ResponseEntity<?> updateUser(@RequestBody @Valid User user) throws Exception{
             return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> deleteUser(@RequestBody @Valid User user) throws Exception {
         userService.deleteUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -61,7 +62,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/{id}/notes", consumes = "application/json")
-    public ResponseEntity addNote(@PathVariable("id") String userId, @RequestBody Note note) throws Exception {
+    public ResponseEntity addNote(@PathVariable("id") String userId, @RequestBody @Valid Note note) throws Exception {
         return new ResponseEntity<>(userService.addNote(userId, note) ,HttpStatus.CREATED);
     }
 
