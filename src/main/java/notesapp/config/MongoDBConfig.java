@@ -17,12 +17,12 @@ public class MongoDBConfig  {
         return strings -> {
             userRepository.deleteAll();
 
-            User u1 = new User("Jose");
+            User u1 = new User("Jose","Jose123");
             u1.addNote(new Note(1,"Esta es mi primera nota"));
             u1.addNote(new Note(2,"Esta es mi segunda nota"));
             u1.addNote(new Note(3,"Esta es mi tercera nota"));
 
-            User u2 = new User("Dayana");
+            User u2 = new User("Dayana", "Dayana123");
             u2.addNote(new Note(1,"This is my first note"));
             u2.addNote(new Note(2,"This is my second note"));
             u2.addNote(new Note(3,"This is my third note"));

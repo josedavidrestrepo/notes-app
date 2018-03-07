@@ -16,15 +16,19 @@ public class User {
     @NotEmpty(message = "username is required")
     private String username;
 
+    @NotEmpty(message = "password is required")
+    private String password;
+
     private List<Note> notes;
 
     public User(){
         super();
     }
 
-    public User(String username) {
+    public User(String username, String password) {
         super();
         this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {
@@ -33,6 +37,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getId() {
