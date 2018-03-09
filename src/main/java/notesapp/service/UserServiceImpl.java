@@ -45,10 +45,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(User user) throws ValidationException, EntityNotFoundException {
-        if (user.getId() == null || user.getId().isEmpty())
+    public void deleteUser(String userId) throws ValidationException, EntityNotFoundException {
+        if (userId == null || userId.isEmpty())
             throw new ValidationException("id is required");
-        if (userRepository.findById(user.getId()) == null)
+        User user = userRepository.findById(userId);
+        if (user == null)
             throw new EntityNotFoundException("The user was not found in the DB");
         userRepository.delete(user);
     }
@@ -70,26 +71,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Note> getNotesByUser(String userId) throws EntityNotFoundException {
-        return findById(userId).getNotes();
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
-    @Override
-    public Note getNoteByUser(String userId, int noteId) throws EntityNotFoundException {
-        User user = findById(userId);
 
-        for (Note n : user.getNotes()) {
-            if (n.getId() == (noteId))
-                return n;
-        }
-        throw new EntityNotFoundException("Note with id " + noteId + " was not found");
-    }
-
-    @Override
-    public Note addNote(String userId, Note note) throws EntityNotFoundException {
-        User user = findById(userId);
-        user.addNote(note);
-        userRepository.save(user);
-        return note;
-    }
 }

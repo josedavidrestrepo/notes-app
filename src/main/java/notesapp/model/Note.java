@@ -3,13 +3,14 @@ package notesapp.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 public class Note {
 
-    @Id
-    private int id;
+    @NotEmpty(message = "Id is required")
+    private String id;
 
     @NotEmpty(message = "Note text is required")
     private String text;
@@ -21,7 +22,7 @@ public class Note {
         super();
     }
 
-    public Note(int id, String text) {
+    public Note(String id, String text) {
         this.id = id;
         this.text = text;
         this.date = LocalDateTime.now();
@@ -43,11 +44,11 @@ public class Note {
         this.date = date;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

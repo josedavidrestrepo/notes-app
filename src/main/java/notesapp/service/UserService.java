@@ -19,15 +19,11 @@ public interface UserService {
 
     User updateUser(User user) throws ValidationException, EntityNotFoundException, EntityAlreadyExistsException;
 
-    void deleteUser(User user) throws ValidationException, EntityNotFoundException;
+    void deleteUser(String userId) throws ValidationException, EntityNotFoundException;
 
     User findByUsername(String username) throws EntityNotFoundException;
 
     User findById(String userId) throws EntityNotFoundException;
 
-    List<Note> getNotesByUser(String userId) throws EntityNotFoundException;
-
-    Note addNote(String userId, Note note) throws EntityNotFoundException;
-
-    Note getNoteByUser(String userId, int noteId) throws EntityNotFoundException;
+    User saveUser(User user);
 }
